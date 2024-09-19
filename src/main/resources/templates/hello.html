@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Practice</title>
+    <link rel="stylesheet" th:href="@{/css/hello.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/hello.js}"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="sign-up-container">
+                <form id="joinForm" onsubmit="return member.join();">
+                    <h1>회원가입</h1>
+<!--                        <div class="social-links">-->
+<!--                            <div>-->
+<!--                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <span>or use your email for registration</span>-->
+                    <input type="text" id="join_name" placeholder="이름">
+                    <input type="password" id="join_password" placeholder="비밀번호">
+                    <button type="submit" class="form_btn">회원가입</button>
+                </form>
+            </div>
+            <div class="sign-in-container">
+                <form id="loginForm" onsubmit="return member.login();">
+                    <h1>로그인</h1>
+<!--                        <div class="social-links">-->
+<!--                            <div>-->
+<!--                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <span>or use your account</span>-->
+                    <input type="text" id="login_name" placeholder="이름">
+                    <input type="password" id="login_password" placeholder="비밀번호">
+                    <button type="submit" class="form_btn">로그인</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay-left">
+                    <h1>돌아오셨군요!</h1>
+                    <p>로그인은 이쪽이에요</p>
+                    <button id="signIn" class="overlay_btn">로그인</button>
+                </div>
+                <div class="overlay-right">
+                    <h1>만나서 반가워요!</h1>
+                    <p>회원가입은 이쪽이에요</p>
+                    <button id="signUp" class="overlay_btn">회원가입</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const member = {
+
+            /** 회원가입 **/
+            join: function () {
+
+                // 회원가입 폼 처리
+                let name = $("#join_name").val();
+                let password = $("#join_password").val();
+                let data = {name: name, password: password};
+
+                $.ajax({
+                    url: 'http://localhost:8088/v1/members/join',
+                    method: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function () {
+                        alert("회원가입 성공!");
+                    },
+                    error: function () {
+                        alert("회원가입 실패!");
+                    },
+                    complete: function () {
+                        location.href='/'
+                    }
+                });
+            },
+
+            /** 로그인 **/
+            login: function () {
+
+                // 로그인 폼 처리
+                let name = $("#login_name").val();
+                let password = $("#login_password").val();
+                let data = {name: name, password: password};
+
+                $.ajax({
+                    url: 'http://localhost:8088/v1/members/login',
+                    method: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function () {
+                        alert("로그인 성공!");
+                    },
+                    error: function () {
+                        alert("로그인 실패!");
+                    },
+                    complete: function () {
+                        location.href='/'
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+</html>
